@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta name='keywords' content='Virtual Bike Bell'>
+<meta name="description" content="Virtual Bike Bell">
+<link rel='shortcut icon' href='ibell.ico'>
+<meta name="viewport" content="initial-scale=1, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta property="og:title" content="Bike Bell" />
+<meta property="og:description" content="Bike Bell" />
+<meta property="og:image" content="https://bedno.com/bike/bell/ibell.jpg" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://Bedno.com/bike/bell" />
+<meta property="og:site_name" content="Bike Bell" />
+<meta http-equiv="cache-control" content="max-age=300" />
+<head>
+<title>Bike Bell</title>
+<script>
+var ResizeTimer = null;
+var WinWidPhys = 0; var WinHgtPhys = 0; var ButtonWid = 0;  var ButtonHgt = 0;
+
+var Recents = Array('','');  var RecentsIdx = 0;  var RecentsIns = "";  var RecentPrev = "";
+var SoundCurr = "";  var SoundPrev = "";
+var Sound = Array();
+var SoundNames = new Array( "RingRing", "Beep", "Bong", "Boo", "Bugle", "Caw",
+               "Charge", "Cheers", "Fail", "Falling", "Photon", "Police",
+               "Rescue", "Ring", "Rooster", "Shofar", "Smash", "Steam",
+               "Traffic", "Train", "Whistle", "Wrong", "Xylophone" );
+var SoundsSel = "<select id='Sounds' onChange='SoundPick(this.value);' style='font-family:Arial; font-size:15pt'>";
+</script>
+</head>
+<body style="margin-top:0px; margin-left:0px; margin-bottom:0px; margin-right:0px; overflow:hidden;" bgColor='#000000' onLoad="DoStartup();" onKeydown='CheckKeypress(event);'>
+<font face="Arial" size=5 color='white'>
+<center>
+<span onClick='SoundDo(SoundCurr);'><img src="ibell.png" style="margin-top:0px; margin-left:0px; margin-bottom:0px; margin-right:0px; overflow:hidden; visibility:hidden;" id="ButtonImage"></span><br>
+<span id="SoundSelectDiv"></span>
+<span id="Recents"><a href="http://AndrewBedno.com" style="text-decoration:none;" alt="By Andrrew Bedno" target="AndrewBedno"><font size=3 color=cyan>&nbsp;&nbsp;v1.2&nbsp;</font></a></span>
+</center>
+</font>
+<script>
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+for (SoundsIdx = 0; SoundsIdx < SoundNames.length; SoundsIdx++) {
+  SoundsSel += "<option value='"+SoundNames[SoundsIdx]+"'>"+SoundNames[SoundsIdx]+"</option>";
+  try {
+    Sound[SoundNames[SoundsIdx]] = new Audio(SoundNames[SoundsIdx].toLowerCase()+'.mp3');
+  } catch (err) { }
+  try {
+    Sound[SoundNames[SoundsIdx]].preload = "auto";
+  } catch (err) { }
+  try {
+    Sound[SoundNames[SoundsIdx]].volume = 1.0;
+  } catch (err) { }
+}
+SoundsSel += "</select>";
+document.getElementById('SoundSelectDiv').innerHTML = SoundsSel;
+function SoundDo (SoundDoIn) {
+  try {
+    if (Sound[SoundDoIn].paused) {
+      Sound[SoundDoIn].currentTime = 0;
+      Sound[SoundDoIn].play();
+    } else {
+      Sound[SoundDoIn].currentTime = -1;
+    }
+  } catch (err) { }
+  if ( (SoundCurr == SoundDoIn) && (RecentPrev != SoundDoIn) ) {
+    if (RecentPrev.length>0) {
+      if (RecentsIns.indexOf(RecentPrev) < 0) {
+        for (RecentsIdx=Recents.length-1; RecentsIdx>0; RecentsIdx--) {
+          Recents[RecentsIdx] = Recents[RecentsIdx-1];
+        }
+        Recents[0] = RecentPrev;
+        RecentsIns = "";
+        for (RecentsIdx=0; RecentsIdx<Recents.length; RecentsIdx++) {
+          if (Recents[RecentsIdx].length>0) {
+            RecentsIns += "<span style='font-size:10pt' onClick='SoundDo(\""+Recents[RecentsIdx]+"\");'>&nbsp;"+Recents[RecentsIdx]+"&nbsp;</span>";
+          }
+        }
+        document.getElementById('Recents').innerHTML = RecentsIns;
+      }
+    }
+    RecentPrev = SoundDoIn;
+  }
+}
+function SoundPick(SoundCode) {
+  SoundCurr = SoundCode;
+  SoundDo(SoundCurr);
+}
+function CheckKeypress (e) {
+  var KeyPressedCode = e.keyCode;
+  if ( (KeyPressedCode == 32) || (KeyPressedCode == 10) || (KeyPressedCode == 13) || (KeyPressedCode == 0) ) {
+    SoundDo(SoundCurr);
+  }
+}
+function DoResize () {
+  WinWidPhys = window.innerWidth && document.documentElement.clientWidth ? Math.min(window.innerWidth, document.documentElement.clientWidth) : window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
+  WinHgtPhys = window.innerHeight && document.documentElement.clientHeight ? Math.min(window.innerHeight, document.documentElement.clientHeight) : window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
+  ButtonWid = Math.floor(WinWidPhys*.90);
+  ButtonHgt = Math.floor(WinHgtPhys*.70);
+  document.getElementById('ButtonImage').width = ButtonWid;
+  document.getElementById('ButtonImage').height = ButtonHgt;
+  document.getElementById('ButtonImage').style.visibility='visible';
+}
+function DoStartup () {
+  window.onresize = function(event) {
+    if (ResizeTimer) { clearTimeout(ResizeTimer); }
+    ResizeTimer = setTimeout('DoResize()',1200);
+  }
+  DoResize();
+  SoundCurr = SoundNames[0];
+}
+</script>
+</body>
+</html>
+
