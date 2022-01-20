@@ -22,10 +22,11 @@ var WinWidPhys = 0; var WinHgtPhys = 0; var ButtonWid = 0;  var ButtonHgt = 0;
 var Recents = Array('','');  var RecentsIdx = 0;  var RecentsIns = "";  var RecentPrev = "";
 var SoundCurr = "";  var SoundPrev = "";
 var Sound = Array();
-var SoundNames = new Array( "RingRing", "Beep", "Bong", "Boo", "Bugle", "Caw",
-               "Charge", "Cheers", "Fail", "Falling", "Photon", "Police",
-               "Rescue", "Ring", "Rooster", "Shofar", "Smash", "Steam",
-               "Traffic", "Train", "Whistle", "Wrong", "Xylophone" );
+var SoundNames = new Array( "Ring_Ring", "Ahooga", "Beep", "Boat", "Bong", "Boo", 
+                            "Caw", "Charge", "Cheers", "Fail", "Falling", "Godzilla", "Honk_Honk", "Howl", 
+                            "James_Brown", "Police", "Rescue", "Ring", "Rooster", "Shofar", "Smash", "Steam", 
+                            "Traffic", "Train", "Triangle", "Whistle", "Wrong", "Xylophone", 
+                            "Trek-Phaser", "Trek-Photon", "Trek-Red_Alert", "Trek-Scanning", "Trek-Transporter", "Trek-Warp" );
 var SoundsSel = "<select id='Sounds' onChange='SoundPick(this.value);' style='font-family:Arial; font-size:15pt'>";
 </script>
 </head>
@@ -34,16 +35,18 @@ var SoundsSel = "<select id='Sounds' onChange='SoundPick(this.value);' style='fo
 <center>
 <span onClick='SoundDo(SoundCurr);'><img src="ibell.png" style="margin-top:0px; margin-left:0px; margin-bottom:0px; margin-right:0px; overflow:hidden; visibility:hidden;" id="ButtonImage"></span><br>
 <span id="SoundSelectDiv"></span>
-<span id="Recents"><a href="http://AndrewBedno.com" style="text-decoration:none;" alt="By Andrrew Bedno" target="AndrewBedno"><font size=3 color=cyan>&nbsp;&nbsp;v1.2&nbsp;</font></a></span>
+<span id="Recents"><a href="http://AndrewBedno.com" style="text-decoration:none;" alt="By Andrrew Bedno" target="AndrewBedno"><font size=3 color=cyan>&nbsp;&nbsp;v1.4&nbsp;</font></a></span>
 </center>
 </font>
 <script>
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 for (SoundsIdx = 0; SoundsIdx < SoundNames.length; SoundsIdx++) {
-  SoundsSel += "<option value='"+SoundNames[SoundsIdx]+"'>"+SoundNames[SoundsIdx]+"</option>";
+  SoundFile = SoundNames[SoundsIdx].toLowerCase()+'.mp3';
+  SoundName = SoundNames[SoundsIdx].replace(/_/,' ').replace(/\-/,': ');
+  SoundsSel += "<option value='"+SoundNames[SoundsIdx]+"'>"+SoundName+"</option>";
   try {
-    Sound[SoundNames[SoundsIdx]] = new Audio(SoundNames[SoundsIdx].toLowerCase()+'.mp3');
+    Sound[SoundNames[SoundsIdx]] = new Audio(SoundFile);
   } catch (err) { }
   try {
     Sound[SoundNames[SoundsIdx]].preload = "auto";
@@ -112,4 +115,3 @@ function DoStartup () {
 </script>
 </body>
 </html>
-
