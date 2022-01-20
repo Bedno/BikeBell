@@ -1,5 +1,5 @@
 "Virtual Bike Bell" web-app gives an array of great sounds on bike speakers.
-https://github.com/Bedno/Virtual_Bike_Bell
+https://github.com/Bedno/Virtual-Bike-Bell
 
 Play now at https://bedno.com/bike/bell
 
