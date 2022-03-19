@@ -11,10 +11,8 @@ Can be dropped on phone's home screen from a browser to appear as an app and pot
 
 All sounds from public domain sources then heavily processed, volume normalized and maximized, mixed to mono, bitrate and audio rate standardized for compactness.
 
-Current sounds: Ring_Ring, Ahooga, Beep, Boat, Bong, Boo, Caw, Charge, Cheers, Fail, Falling, Godzilla, Honk_Honk, Howl, James_Brown, Police, Rescue, Ring, Rooster, Shofar, Smash, Steam, Traffic, Train, Triangle, Whistle, Wrong, Xylophone, Trek-Phaser, Trek-Photon, Trek-Red_Alert, Trek-Scanning, Trek-Transporter, Trek-Warp.
-
-Consider adding speech features: Fortune selection which speaks one of the famed eightball answers. Dice selection which speaks a number one through six. Twister selection speaks one of the 16 moves.
+Current sounds: Ring, Ahooga, Beep, Boat, Bong, Boo, Caw, Charge, Cheers, Fail, Falling, Godzilla, Honk, Howl, James, Rooster, Shofar, Smash, Steam, Traffic, Train, Triangle, Whistle, Wrong, Xylophone, Trek-Phaser, Trek-Photon, Trek-Red_Alert.
 
 Install locally by placing all files in same directory and launching index.htm
 
-On PCs all sounds should pre-load. On mobile the browser blocks download until user interaction. But after the first play of any sound, future uses of it should be instantaneous.
+On PCs all sounds should pre-load. On mobile the browser blocks download until user interaction. But after the first play of any sound, future uses of it should be faster.
