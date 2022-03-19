@@ -19,14 +19,14 @@
 var ResizeTimer = null;
 var WinWidPhys = 0; var WinHgtPhys = 0; var ButtonWid = 0;  var ButtonHgt = 0;
 
-var Recents = Array('','');  var RecentsIdx = 0;  var RecentsIns = "";  var RecentPrev = "";
+var Recents = Array('','');  var RecentsIdx = 0;  var RecentsIns = "";  var RecentPrev = "";  var RecentName = "";
 var SoundCurr = "";  var SoundPrev = "";
 var Sound = Array();
-var SoundNames = new Array( "Ring_Ring", "Ahooga", "Beep", "Boat", "Bong", "Boo", 
-                            "Caw", "Charge", "Cheers", "Fail", "Falling", "Godzilla", "Honk_Honk", "Howl", 
-                            "James_Brown", "Police", "Rescue", "Ring", "Rooster", "Shofar", "Smash", "Steam", 
-                            "Traffic", "Train", "Triangle", "Whistle", "Wrong", "Xylophone", 
-                            "Trek-Phaser", "Trek-Photon", "Trek-Red_Alert", "Trek-Scanning", "Trek-Transporter", "Trek-Warp" );
+var SoundNames = new Array( "Ring", "Ahooga", "Beep", "Boat", "Bong", "Boo", 
+                            "Caw", "Charge", "Fail", "Falling", "Godzilla", "Honk", "Howl", 
+                            "James", "Laughs", "Rooster", "Shofar", "Smash", "Steam", 
+                            "Traffic", "Train", "Triangle", "Unicorn", "Whistle", "Wrong", "Xylophone", 
+                            "Trek-Phaser", "Trek-Photon", "Trek-Red_Alert");
 var SoundsSel = "<select id='Sounds' onChange='SoundPick(this.value);' style='font-family:Arial; font-size:15pt'>";
 </script>
 </head>
@@ -35,7 +35,7 @@ var SoundsSel = "<select id='Sounds' onChange='SoundPick(this.value);' style='fo
 <center>
 <span onClick='SoundDo(SoundCurr);'><img src="ibell.png" style="margin-top:0px; margin-left:0px; margin-bottom:0px; margin-right:0px; overflow:hidden; visibility:hidden;" id="ButtonImage"></span><br>
 <span id="SoundSelectDiv"></span>
-<span id="Recents"><a href="http://AndrewBedno.com" style="text-decoration:none;" alt="By Andrrew Bedno" target="AndrewBedno"><font size=3 color=cyan>&nbsp;&nbsp;v1.4&nbsp;</font></a></span>
+<span id="Recents"><a href="http://AndrewBedno.com" style="text-decoration:none;" alt="By Andrrew Bedno" target="AndrewBedno"><font size=3 color=cyan>&nbsp;&nbsp;v1.8&nbsp;</font></a></span>
 </center>
 </font>
 <script>
@@ -43,7 +43,7 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 for (SoundsIdx = 0; SoundsIdx < SoundNames.length; SoundsIdx++) {
   SoundFile = SoundNames[SoundsIdx].toLowerCase()+'.mp3';
-  SoundName = SoundNames[SoundsIdx].replace(/_/,' ').replace(/\-/,': ');
+  SoundName = SoundNames[SoundsIdx].replace(/_/,' ').replace(/Trek-/,'').replace(/ Brown/,'').replace('Transporter','Transport');
   SoundsSel += "<option value='"+SoundNames[SoundsIdx]+"'>"+SoundName+"</option>";
   try {
     Sound[SoundNames[SoundsIdx]] = new Audio(SoundFile);
@@ -63,7 +63,7 @@ function SoundDo (SoundDoIn) {
       Sound[SoundDoIn].currentTime = 0;
       Sound[SoundDoIn].play();
     } else {
-      Sound[SoundDoIn].currentTime = -1;
+      Sound[SoundDoIn].currentTime = 0;
     }
   } catch (err) { }
   if ( (SoundCurr == SoundDoIn) && (RecentPrev != SoundDoIn) ) {
@@ -76,7 +76,10 @@ function SoundDo (SoundDoIn) {
         RecentsIns = "";
         for (RecentsIdx=0; RecentsIdx<Recents.length; RecentsIdx++) {
           if (Recents[RecentsIdx].length>0) {
-            RecentsIns += "<span style='font-size:10pt' onClick='SoundDo(\""+Recents[RecentsIdx]+"\");'>&nbsp;"+Recents[RecentsIdx]+"&nbsp;</span>";
+            RecentName = Recents[RecentsIdx].replace('_','');
+            RecentName = RecentName.replace('Trek-','');
+            RecentName = RecentName.replace('JamesBrown','James').replace('Transporter','Trans').replace('Xylophone','Xylo').replace('Scanning','Scan');
+            RecentsIns += "<span style='font-size:10pt' onClick='SoundDo(\""+Recents[RecentsIdx]+"\");'>&nbsp;"+RecentName+"&nbsp;</span>";
           }
         }
         document.getElementById('Recents').innerHTML = RecentsIns;
