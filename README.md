@@ -16,3 +16,5 @@ Current sounds: Ring, Ahooga, Beep, Boat, Bong, Boo, Caw, Charge, Cheers, Fail, 
 Install locally by placing all files in same directory and launching index.htm
 
 On PCs all sounds should pre-load. On mobile the browser blocks download until user interaction. But after the first play of any sound, future uses of it should be faster.
+
+ALSO SEE the "Electronic Bike Bell" project which implements this on a microcontroller: https://github.com/Bedno/electronic_bike_bell
